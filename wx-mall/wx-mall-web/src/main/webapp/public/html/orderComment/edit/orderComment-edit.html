@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>查看图片</title>
+<!-- 引入js -->
+<script type="text/javascript" src="../../../static/base/baselib.js"></script>
+</head>
+
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-orderComment-edit">
+		<input type="hidden" id="id" name="id" />
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>评分等级：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="star-bar star-bar-show size-S f-l va-m mr-10">
+					<span id="starGroup" class="star"></span>
+				</div>
+				<strong class="f-l f-14 va-m" id="goodsStar"></strong>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>评论内容：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea type="text" class="textarea radius" name="content" readonly="readonly"></textarea>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">评论图片：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<ul class="travel-pic cl" id="comment-images"></ul>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商家回复：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea type="text" class="textarea radius" id="responseContent" name="responseContent" required="true"></textarea>
+			</div>
+		</div>
+	    <!-- 操作按钮 -->
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button onClick="CommUtils.cmCloseIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+
+<!--当前页面所需脚本-->
+<script type="text/javascript" src="orderComment-edit.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>后台登录 - H-ui.admin v3.1</title>
+<!-- 引入js -->
+<script type="text/javascript" src="../static/base/baselib.js"></script>
+<link href="../static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="header"></div>
+	<div class="loginWraper">
+		<div id="loginform" class="loginBox">
+			<form class="form form-horizontal" id="form-user-login">
+				<div class="row cl">
+					<label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
+					<div class="formControls col-xs-8">
+						<input name="account" type="text" placeholder="账户" class="input-text size-L" required="true">
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
+					<div class="formControls col-xs-8">
+						<input name="passwd" type="password" placeholder="密码" class="input-text size-L" required="true">
+					</div>
+				</div>
+				<div class="row cl">
+					<div class="formControls col-xs-8 col-xs-offset-3">
+						<input type="submit" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;"> 
+						<input type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="footer">Copyright 你的公司名称 by H-ui.admin v3.1</div>
+	
+<!--当前页面所需脚本-->
+<script type="text/javascript" src="login.js"></script>
+</body>
+</html>

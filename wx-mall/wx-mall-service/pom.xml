@@ -1,0 +1,31 @@
+﻿<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yun.smart</groupId>
+    <artifactId>wx-mall</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>wx-mall-service</artifactId>
+  <packaging>war</packaging>
+  
+  <dependencies>
+		<!-- 导入Mysql数据库链接jar包 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>com.yun.smart</groupId>
+            <artifactId>wx-mall-commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        
+	</dependencies>
+</project>

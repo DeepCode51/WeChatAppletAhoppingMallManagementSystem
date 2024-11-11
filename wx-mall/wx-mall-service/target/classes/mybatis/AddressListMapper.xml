@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.AddressListMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	   id as id,
+  	   user_id as userId,
+  	   link_man as linkMan,
+  	   link_phone as linkPhone,
+  	   link_addr as linkAddr,
+  	   default_addr as defaultAddr,
+  	   create_by as createBy,
+  	   create_time as createTime,
+  	   update_by as updateBy,
+  	   update_time as updateTime,
+  	   enable as enable,
+  	   remark as remark,
+  	</trim>
+  </sql>
+
+	<!-- 根据条件分页查询结果集 -->
+	<select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.AddressListSearchParams">
+		select
+		   a.id as id,
+	  	   a.user_id as userId,
+	  	   a.link_man as linkMan,
+	  	   a.link_phone as linkPhone,
+	  	   a.link_addr as linkAddr,
+	  	   a.default_addr as defaultAddr,
+	  	   a.create_time as createTime,
+	  	   b.user_name as userName
+		from 
+			wx_address_list a
+		left join
+			wx_user_info b
+		on 
+			a.user_id = b.id
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="enable != null">
+				AND a.enable = #{enable}
+			</if>
+			<if test="linkMan != null and linkMan !=''">
+				AND a.link_man LIKE CONCAT('%', #{linkMan},'%')
+			</if>
+			<if test="defaultAddr != null">
+				AND a.default_addr = #{defaultAddr}
+			</if>
+			<if test="userName != null and userName !=''">
+				AND b.user_name LIKE CONCAT('%', #{userName},'%')
+			</if>
+		</trim>
+	</select>
+
+	<!-- 根据条件查询结果集 -->
+	<select id="searchList" resultType="com.yun.smart.model.AddressList" parameterType="com.yun.smart.model.AddressList">
+		select
+		<include refid="baseColumns" />
+		from wx_address_list
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>  
+	
+	<!-- 查询条件 -->
+	<sql id="whereClause">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND ${columnPrefix}id = #{id}
+			</if>
+			<if test="userId != null">
+				AND ${columnPrefix}user_id = #{userId}
+			</if>
+			<if test="linkMan != null">
+				AND ${columnPrefix}link_man = #{linkMan}
+			</if>
+			<if test="linkPhone != null">
+				AND ${columnPrefix}link_phone = #{linkPhone}
+			</if>
+			<if test="linkAddr != null">
+				AND ${columnPrefix}link_addr = #{linkAddr}
+			</if>
+			<if test="defaultAddr != null">
+				AND ${columnPrefix}default_addr = #{defaultAddr}
+			</if>
+			<if test="createBy != null">
+				AND ${columnPrefix}create_by = #{createBy}
+			</if>
+			<if test="createTime != null">
+				AND ${columnPrefix}create_time = #{createTime}
+			</if>
+			<if test="updateBy != null">
+				AND ${columnPrefix}update_by = #{updateBy}
+			</if>
+			<if test="updateTime != null">
+				AND ${columnPrefix}update_time = #{updateTime}
+			</if>
+			<if test="enable != null">
+				AND ${columnPrefix}enable = #{enable}
+			</if>
+			<if test="remark != null">
+				AND ${columnPrefix}remark = #{remark}
+			</if>
+		</trim>
+	</sql>
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.OrderCommentMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	  id as id,
+  	  user_id as userId,
+  	  order_no as orderNo,
+  	  goods_no as goodsNo,
+  	  content as content,
+  	  goods_star as goodsStar,
+  	  response_content as responseContent,
+  	  response_time as responseTime,
+  	  comment_type as commentType,
+  	  create_by as createBy,
+  	  create_time as createTime,
+  	  update_by as updateBy,
+  	  update_time as updateTime,
+  	  enable as enable,
+  	  remark as remark,
+  	</trim>
+  </sql>
+
+	<!-- 根据条件分页查询结果集 -->
+	<select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.OrderCommentSearchParams">
+		select
+		   a.id as id,
+	  	   a.user_id as userId,
+	  	   a.order_no as orderNo,
+	  	   a.goods_no as goodsNo,
+	  	   a.content as content,
+	  	   a.goods_star as goodsStar,
+	  	   a.create_time as createTime,
+	  	   a.response_content as responseContent,
+	  	   a.response_time as responseTime,
+	  	   a.comment_type as commentType,
+	  	   b.user_name as userName,
+	  	   c.name as goodsName
+		from 
+			wx_order_comment a
+		left join
+			wx_user_info b
+		on 
+			a.user_id = b.id
+		left join
+			wx_goods_info c
+		on 
+			a.goods_no = c.goods_no
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="enable != null">
+				AND a.enable = #{enable}
+			</if>
+			<if test="goodsNo != null and goodsNo !=''">
+				AND a.goods_no = #{goodsNo}
+			</if>
+			<if test="orderNo != null and orderNo !=''">
+				AND a.order_no = #{orderNo}
+			</if>
+			<if test="userName != null and userName !=''">
+				AND b.user_name LIKE CONCAT('%', #{userName},'%')
+			</if>
+			<if test="goodsName != null and goodsName !=''">
+				AND c.name LIKE CONCAT('%', #{goodsName},'%')
+			</if>
+			<if test="goodsStar != null and goodsStar !=''">
+				AND a.goods_star = #{goodsStar}
+			</if>
+			<if test="commentType != null and commentType !=''">
+				AND a.comment_type = #{commentType}
+			</if>
+			<if test="minCreateTime !=null">
+				AND a.create_time <![CDATA[>=]]> #{minCreateTime}
+			</if>
+			<if test="maxCreateTime !=null">
+				AND a.create_time <![CDATA[<=]]> #{maxCreateTime}
+			</if>
+		</trim>
+	</select>
+
+	<!-- 根据条件查询结果集 -->
+	<select id="searchList" resultType="com.yun.smart.model.OrderComment" parameterType="com.yun.smart.model.OrderComment">
+		select
+		<include refid="baseColumns" />
+		from wx_order_comment
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>  
+	
+	<!-- 查询条件 -->
+  <sql id="whereClause">
+	<trim prefix="WHERE" prefixOverrides="AND">
+	<if test="id != null">
+	  and ${columnPrefix}id = #{id}
+	</if>
+	<if test="userId != null">
+	  and ${columnPrefix}user_id = #{userId}
+	</if>
+	<if test="orderNo != null and orderNo != ''">
+	  and ${columnPrefix}order_no = #{orderNo}
+	</if>
+	<if test="goodsNo != null and goodsNo != ''">
+	  and ${columnPrefix}goods_no = #{goodsNo}
+	</if>
+	<if test="content != null and content != ''">
+	  and ${columnPrefix}content = #{content}
+	</if>
+	<if test="goodsStar != null">
+	  and ${columnPrefix}goods_star = #{goodsStar}
+	</if>
+	<if test="responseContent != null and responseContent != ''">
+	  and ${columnPrefix}response_content = #{responseContent}
+	</if>
+	<if test="responseTime != null">
+	  and ${columnPrefix}response_time = #{responseTime}
+	</if>
+	<if test="commentType != null and commentType != ''">
+	  and ${columnPrefix}comment_type = #{commentType}
+	</if>
+	<if test="createBy != null">
+	  and ${columnPrefix}create_by = #{createBy}
+	</if>
+	<if test="createTime != null">
+	  and ${columnPrefix}create_time = #{createTime}
+	</if>
+	<if test="updateBy != null">
+	  and ${columnPrefix}update_by = #{updateBy}
+	</if>
+	<if test="updateTime != null">
+	  and ${columnPrefix}update_time = #{updateTime}
+	</if>
+	<if test="enable != null">
+	  and ${columnPrefix}enable = #{enable}
+	</if>
+	<if test="remark != null and remark != ''">
+	  and ${columnPrefix}remark = #{remark}
+	</if>
+	</trim>
+  </sql>
+</mapper>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.GoodsInfoMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	  id as id,
+  	  goods_no as goodsNo,
+  	  name as name,
+  	  original_price as originalPrice,
+  	  agent_price as agentPrice,
+  	  sell_price as sellPrice,
+  	  discount_price as discountPrice,
+  	  weight as weight,
+  	  weight_unit as weightUnit,
+  	  grow_place as growPlace,
+  	  send_place as sendPlace,
+  	  send_term as sendTerm,
+  	  send_addition as sendAddition,
+  	  express as express,
+  	  express_price as expressPrice,
+  	  before_sell as beforeSell,
+  	  after_sell as afterSell,
+  	  sell_status as sellStatus,
+  	  goods_type as goodsType,
+  	  create_by as createBy,
+  	  create_time as createTime,
+  	  update_by as updateBy,
+  	  update_time as updateTime,
+  	  enable as enable,
+  	  remark as remark,
+  	</trim>
+  </sql>
+
+	<!-- 根据条件分页查询结果集 -->
+	<select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.GoodsInfoSearchParams">
+		select
+		<trim suffixOverrides=",">
+	  	   a.id as id,
+	  	   a.goods_no as goodsNo,
+	  	   a.name as name,
+	  	   a.sell_price as sellPrice,
+	  	   a.discount_price as discountPrice,
+	  	   a.weight as weight,
+	  	   a.weight_unit as weightUnit,
+	  	   a.grow_place as growPlace,
+	  	   a.send_place as sendPlace,
+	  	   a.send_term as sendTerm,
+	  	   a.send_addition as sendAddition,
+	  	   a.express as express,
+	  	   a.express_price as expressPrice,
+	  	   a.before_sell as beforeSell,
+	  	   a.after_sell as afterSell,
+	  	   a.sell_status as sellStatus,
+	  	   a.goods_type as goodsType,
+	  	   a.remark as remark,
+	  	   b.file_path as mainLogo,
+	  	</trim>
+		from 
+			wx_goods_info a
+		left join
+			wx_file_image b
+		on
+			(a.goods_no = b.biz_no and b.enable = 1 and b.main_logo = 1)
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="enable != null">
+				AND a.enable = #{enable}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE CONCAT('%', #{name},'%')
+			</if> 
+			<if test="sellStatus != null and sellStatus != ''">
+				AND a.sell_status = #{sellStatus}
+			</if>
+			<if test="goodsType != null and goodsType != ''">
+				AND a.goods_type = #{goodsType}
+			</if>
+		</trim>
+	</select>
+
+	<!-- 根据条件查询结果集 -->
+	<select id="searchList" resultType="com.yun.smart.model.GoodsInfo" parameterType="com.yun.smart.model.GoodsInfo">
+		select
+		<include refid="baseColumns" />
+		from wx_goods_info
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>  
+	
+	<!-- 查询条件 -->
+	<sql id="whereClause">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND ${columnPrefix}id = #{id}
+			</if>
+			<if test="goodsNo != null and goodsNo != ''">
+			  and goods_no = #{goodsNo}
+			</if>
+			<if test="name != null">
+				AND ${columnPrefix}name = #{name}
+			</if>
+			<if test="originalPrice != null">
+				AND ${columnPrefix}original_price = #{originalPrice}
+			</if>
+			<if test="agentPrice != null">
+				AND ${columnPrefix}agent_price = #{agentPrice}
+			</if>
+			<if test="sellPrice != null">
+				AND ${columnPrefix}sell_price = #{sellPrice}
+			</if>
+			<if test="discountPrice != null">
+				AND ${columnPrefix}discount_price = #{discountPrice}
+			</if>
+			<if test="weight != null">
+				AND ${columnPrefix}weight = #{weight}
+			</if>
+			<if test="weightUnit != null">
+				AND ${columnPrefix}weight_unit = #{weightUnit}
+			</if>
+			<if test="growPlace != null">
+				AND ${columnPrefix}grow_place = #{growPlace}
+			</if>
+			<if test="sendPlace != null">
+				AND ${columnPrefix}send_place = #{sendPlace}
+			</if>
+			<if test="sendTerm != null">
+				AND ${columnPrefix}send_term = #{sendTerm}
+			</if>
+			<if test="sendAddition != null">
+				AND ${columnPrefix}send_addition = #{sendAddition}
+			</if>
+			<if test="express != null">
+				AND ${columnPrefix}express = #{express}
+			</if>
+			<if test="expressPrice != null">
+				AND ${columnPrefix}express_price = #{expressPrice}
+			</if>
+			<if test="beforeSell != null">
+				AND ${columnPrefix}before_sell = #{beforeSell}
+			</if>
+			<if test="afterSell != null">
+				AND ${columnPrefix}after_sell = #{afterSell}
+			</if>
+			<if test="sellStatus != null">
+				AND ${columnPrefix}sell_status = #{sellStatus}
+			</if>
+			<if test="goodsType != null">
+				AND ${columnPrefix}goods_type = #{goodsType}
+			</if>
+			<if test="createBy != null">
+				AND ${columnPrefix}create_by = #{createBy}
+			</if>
+			<if test="createTime != null">
+				AND ${columnPrefix}create_time = #{createTime}
+			</if>
+			<if test="updateBy != null">
+				AND ${columnPrefix}update_by = #{updateBy}
+			</if>
+			<if test="updateTime != null">
+				AND ${columnPrefix}update_time = #{updateTime}
+			</if>
+			<if test="enable != null">
+				AND ${columnPrefix}enable = #{enable}
+			</if>
+			<if test="remark != null">
+				AND ${columnPrefix}remark = #{remark}
+			</if>
+		</trim>
+	</sql>
+</mapper>

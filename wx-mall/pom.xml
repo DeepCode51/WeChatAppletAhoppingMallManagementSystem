@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yun.smart</groupId>
+  <artifactId>wx-mall</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>wx-mall-commons</module>
+  	<module>wx-mall-web</module>
+  	<module>wx-mall-service</module>
+  </modules>
+  
+  <properties>
+		<mysql.version>5.1.46</mysql.version>
+		<mybatis.version>3.4.2</mybatis.version>
+		<mybatis-spring.version>1.3.1</mybatis-spring.version>
+		<druid.version>1.1.6</druid.version>
+		<quartz.version>2.2.3</quartz.version>
+		<junit.version>4.12</junit.version>
+		<commons-fileupload.version>1.3.3</commons-fileupload.version>
+	  	<java.version>1.8</java.version>
+		<dubbo.version>2.5.8</dubbo.version>
+		<zookeeper.version>3.4.6</zookeeper.version>
+		<spring.version>5.0.5.RELEASE</spring.version>
+		<aspectj.version>1.8.9</aspectj.version>
+		<mybatis-plus.version>2.1.8</mybatis-plus.version>
+		<guava.version>19.0</guava.version>
+		<gson.version>2.8.0</gson.version>
+		<fastjson.version>1.2.15</fastjson.version>
+		<commons-lang3.version>3.6</commons-lang3.version>
+		<commons-collections4.version>4.1</commons-collections4.version>
+		<commons-io.version>2.5</commons-io.version>
+		<commons-codec.version>1.10</commons-codec.version>
+		<commons-beanutils.version>1.9.3</commons-beanutils.version>
+		<poi.version>3.17</poi.version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
+		<log4j-spring.version>0.1.4</log4j-spring.version>
+		<logback.version>1.1.3</logback.version>
+		<servlet.version>3.1.0</servlet.version>
+		<jcl.version>2.8</jcl.version>
+		<jackson.version>2.9.6</jackson.version>
+		<jackson-annotations.version>2.9.2</jackson-annotations.version>
+		<lucene.version>6.6.3</lucene.version>
+		
+		<swagger2.version>2.7.0</swagger2.version>
+		<jedis.version>2.7.3</jedis.version>
+		<spring.data.redis.version>1.7.1.RELEASE</spring.data.redis.version>
+		
+		<jedis.version>2.9.0</jedis.version>
+	    <spring-data-redis.version>1.8.7.RELEASE</spring-data-redis.version>
+	    <redisson.version>3.5.5</redisson.version>
+	    <spring-session.version>1.3.1.RELEASE</spring-session.version>
+	    <jwt.version>0.7.0</jwt.version>
+	    <quartz.version>2.3.0</quartz.version>
+	</properties>
+</project>

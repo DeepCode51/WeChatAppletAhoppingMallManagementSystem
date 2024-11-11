@@ -1,0 +1,57 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>新增用户</title>
+<!-- 引入js -->
+<script type="text/javascript" src="../../../static/base/baselib.js"></script>
+</head>
+
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-userInfo-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>姓名：</label>
+			<div class="formControls col-xs-8 col-sm-3">
+				<input type="text" class="input-text" id="userName" name="userName" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>手机号：</label>
+			<div class="formControls col-xs-8 col-sm-3">
+				<input type="text" class="input-text" id="phone" name="phone" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>微信号：</label>
+			<div class="formControls col-xs-8 col-sm-3">
+				<input type="text" class="input-text" id="wxAccount" name="wxAccount" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>openid：</label>
+			<div class="formControls col-xs-8 col-sm-3">
+				<input type="text" class="input-text" id="wxOpenid" name="wxOpenid" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>类型：</label>
+			<div class="formControls col-xs-8 col-sm-3">
+				<select class="input-text" id="userType" name="userType" required="true"></select>
+			</div>
+		</div>
+		<!-- 操作按钮 -->
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button onClick="CommUtils.cmCloseIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+
+<!--当前页面所需脚本-->
+<script type="text/javascript" src="userInfo-add.js"></script>
+</body>
+</html>

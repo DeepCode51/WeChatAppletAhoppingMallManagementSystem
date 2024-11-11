@@ -1,0 +1,59 @@
+﻿﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>字典列表</title>
+<!-- 引入js -->
+<script type="text/javascript" src="../../static/base/baselib.js"></script>
+</head>
+
+<body>
+<!-- 目录 -->
+<nav class="breadcrumb">
+	<i class="Hui-iconfont">&#xe67f;</i> 首页 
+	<span class="c-gray en">&gt;</span> 菜单目录 
+	<span class="c-gray en">&gt;</span> 字典 
+	<button class="btn btn-primary radius r" style="line-height:1.6em;margin-top:3px" onclick="removeIframe()" >关闭选项卡</button>
+</nav>
+
+<div class="page-container">
+	<form id="table_search_form">
+		<div class="text-r">
+			<!-- 查询条件 -->
+			<input type="text" name="dicName" placeholder="标识" style="width:200px" class="input-text radius">
+			
+			<!-- 固定按钮 -->
+			<a id="table_search" class="btn btn-success radius" title="查询"><i class="Hui-iconfont">&#xe665;</i> 查询</a>
+			<a class="btn btn-success radius" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+		</div>
+	</form>
+	
+	<!-- 操作按钮 -->
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a id="table_delete" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a> 
+			<a id="table_add" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加</a>
+		</span> 
+	</div>
+
+	<!-- 数据表格 -->
+	<div class="mt-20">
+		<div class="table-responsive">
+			<table class="table table-striped" id="table_list" style="word-break:break-all; word-wrap:break-all;">
+				<thead>
+					<tr>
+						<th data-field="check" data-checkbox = "true"></th>
+						<th data-field="dicText" data-valign="middle">字典词</th>
+						<th data-field="dicValue" data-valign="middle">字典值</th>
+						<th data-field="dicName" data-valign="middle">标识</th>
+						<th data-field="operate" data-width="10%" data-valign="middle" data-formatter="DicInfo.operateFormatter"  data-events="DicInfo.operateEvents">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+<link href="../../lib/bootstrap/bootstrap.css" rel="stylesheet" />
+<script src="../../lib/bootstrap-table/bootstraptable-treeview.js"></script>
+<script type="text/javascript" src="dicInfo-list.js"></script>
+</body>
+</html>

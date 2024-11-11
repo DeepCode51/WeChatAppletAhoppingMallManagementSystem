@@ -1,0 +1,6 @@
+﻿spring + springMvc + dubbo
+启动项目：tomcat，启动zookeeper，启动redis
+访问主页：http://localhost:8080/public/login/index.html
+登录账号：13812348899 -> 111111
+前端：Hui-admin
+微信小程序后台管理系统。

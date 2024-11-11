@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-4.2.xsd  
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+                        http://www.springframework.org/schema/aop 
+          http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
+	<context:component-scan base-package="com.yun.smart.controller" />
+	<!-- 引用Swagger 默认配置 -->
+    <bean class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration" id="swagger2Config"/> 
+    <!-- 添加Swagger2 扫描目录 -->
+    <context:component-scan base-package="com.train.action" ></context:component-scan>
+
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:message-converters>
+			<!-- 返回json数据处理 -->
+			<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<description>JSON转换器</description>
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>
+						<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+				<!-- 使用FastJson替代JackSon避免循环嵌套异常 -->
+				<property name="features">
+					<array>
+						<value>QuoteFieldNames</value>
+						<value>WriteDateUseDateFormat</value>
+						<value>WriteMapNullValue</value><!-- 输出值为null的字段 -->
+					</array>
+				</property>
+				<!-- @ResponseBody默认将日期转时间戳，对日期格式处理 -->
+				<property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+			</bean>
+			
+			<!-- 解决@ResponseBody返回中文乱码 -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+	            <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+	        </bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<!-- 前端提交日期字符串转换成Date统一处理 -->
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">  
+	    <property name="converters">  
+	        <list>  
+	            <bean class="com.yun.smart.config.DateConverterConfig"/> 
+	        </list>  
+	    </property>  
+	</bean>  
+
+	<!-- 开启默认处理 -->
+	<mvc:default-servlet-handler />
+	
+	<!-- 开启aspect -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
+	<!-- 配置Swagger相关静态资源 -->
+    <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
+    <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
+    <!-- 访问静态资源 -->
+    <mvc:resources location="/public" mapping="/**"/>
+    
+</beans>

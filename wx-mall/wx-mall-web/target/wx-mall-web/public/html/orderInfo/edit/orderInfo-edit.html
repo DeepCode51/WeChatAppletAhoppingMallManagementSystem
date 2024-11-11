@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>编辑订单</title>
+<!-- 引入js -->
+<script type="text/javascript" src="../../../static/base/baselib.js"></script>
+</head>
+
+<body>
+<article class="page-container">
+	<div class="panel panel-success">
+		<div class="panel-header">修改订单</div>
+		<div class="panel-body">
+			<form class="form form-horizontal" id="form-orderInfo-edit">
+				<input type="hidden" name="id" />
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">订单状态：</label>
+					<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+						<div class="radio-box">
+						    <input type="radio" id="orderStatus-1" value="1" name="orderStatus">
+						    <label for="orderStatus-1">待付款</label>
+						</div>
+						<div class="radio-box">
+						    <input type="radio" id="orderStatus-2" value="2" name="orderStatus">
+						    <label for="orderStatus-2">待发货</label>
+						</div>
+						<div class="radio-box">
+						    <input type="radio" id="orderStatus-3" value="3" name="orderStatus">
+						    <label for="orderStatus-3">已发货</label>
+						</div>
+						<div class="radio-box">
+						    <input type="radio" id="orderStatus-4" value="4" name="orderStatus">
+						    <label for="orderStatus-4">已取消</label>
+						</div>
+						<div class="radio-box">
+						    <input type="radio" id="orderStatus-5" value="5" name="orderStatus">
+						    <label for="orderStatus-5">已完成</label>
+						</div>
+						<div class="radio-box">
+						    <input type="radio" id="orderStatus-6" value="6" name="orderStatus">
+						    <label for="orderStatus-6">售后中</label>
+						</div>
+					</div>
+				</div>
+		        <!-- 操作按钮 -->
+				<div class="row cl">
+					<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+						<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+						<button onClick="CommUtils.cmCloseIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="panel panel-secondary mt-30">
+		<div class="panel-header">订单详情</div>
+		<div class="panel-body">
+			<form class="form form-horizontal">
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">购买商品：</label>
+					<div class="formControls col-xs-8 col-sm-3">
+						<a href="#">
+							<img id="goodsImage" class="thumbnail" src="" width="100px;" height="65px;">
+							<strong id="goodsName"></strong>
+						</a>
+					</div>
+				</div>
+				<!-- 显示物流信息 -->
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2" id="expressName"></label>
+					<div class="formControls col-xs-8 col-sm-3">
+						<input type="text" class="input-text radius" name="expressNo" readonly="readonly">
+					</div>
+					<div class="formControls col-xs-8 col-sm-3">
+						<a href="https://m.kuaidi100.com/" target="_blank" class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe665;</i>查询物流进度</a>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">购买人：</label>
+					<div class="formControls col-xs-8 col-sm-3">
+						<input type="text" class="input-text radius" name="userName" readonly="readonly">
+					</div>
+					<label class="form-label col-xs-4 col-sm-2">购买时间：</label>
+					<div class="formControls col-xs-8 col-sm-3">
+						<input type="text" class="input-text radius" name="createTime" readonly="readonly">
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">收件人：</label>
+					<div class="formControls col-xs-8 col-sm-3">
+						<input type="text" class="input-text radius" name="linkMan" readonly="readonly">
+					</div>
+					<label class="form-label col-xs-4 col-sm-2">联系电话：</label>
+					<div class="formControls col-xs-8 col-sm-3">
+						<input type="text" class="input-text radius" name="linkPhone" readonly="readonly">
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">联系地址：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<input type="text" class="input-text radius" name="linkAddr" readonly="readonly">
+					</div>
+				</div>
+				
+				<!-- 显示评价 -->
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">评分等级：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<div class="star-bar star-bar-show size-S f-l va-m mr-10">
+							<span id="starGroup" class="star"></span>
+						</div>
+						<strong class="f-l f-14 va-m" id="goodsStar"></strong>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">评论内容：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<textarea type="text" class="textarea radius" name="content1" readonly="readonly"></textarea>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">评论图片：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<ul class="travel-pic cl" id="comment-images-1"></ul>
+					</div>
+				</div>
+		
+				<!-- 显示售后 -->
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">售后内容：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<textarea type="text" class="textarea radius" name="content2" readonly="readonly"></textarea>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">售后图片：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<ul class="travel-pic cl" id="comment-images-2"></ul>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</article>
+
+
+<!--当前页面所需脚本-->
+<script type="text/javascript" src="orderInfo-edit.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+          http://www.springframework.org/schema/tx
+          http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!-- 扫描注解 -->
+	<context:component-scan base-package="com.yun.smart">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 1. 数据源 : DriverManagerDataSource -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/graduation_192_wxmall?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true&amp;serverTimezone=PRC&amp;useSSL=false" />
+		<property name="username" value="root" />
+		<property name="password" value="123456" />
+		<!-- 从池中获取连接前进行验证 -->
+		<property name="testOnBorrow" value="false" />
+		<!-- 向池中还回连接前进行验证 -->
+		<property name="testOnReturn" value="false" />
+		<!-- 连接空闲时验证 -->
+		<property name="testWhileIdle" value="true" />
+		<!-- 运行判断连接超时任务(evictor)的时间间隔，单位为毫秒，默认为-1，即不执行任务。 -->
+		<property name="timeBetweenEvictionRunsMillis" value="300000" />
+		<!-- 连接的超时时间，默认为半小时。 -->
+		<property name="minEvictableIdleTimeMillis" value="1800000" />
+		<!-- 每次evictor启动检查的空闲连接数，-2标识1/2的总空闲连接 -->
+		<property name="numTestsPerEvictionRun" value="-1"></property>
+		<!-- 线程池初始数量 -->
+		<property name="initialSize" value="10"></property>
+		<!-- 最大线程数量 -->
+		<property name="maxActive" value="100"></property>
+		<!-- 最大空闲线程数量 -->
+		<property name="maxIdle" value="100"></property>
+		<!-- 最小空闲线程数量 -->
+		<property name="minIdle" value="10"></property>
+		<!-- 从线程池获取一个mysql连接的最大等待时间，单位毫秒 -->
+		<property name="maxWait" value="1000"></property>
+	</bean>
+
+	<!-- 2. mybatis的SqlSession的工厂-->
+	<bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:mybatis/*.xml" />
+		<property name="typeAliasesPackage" value="com.yun.smart.model"/>
+		<property name="plugins">
+	      <array>
+	         <!-- 分页插件配置 -->
+	         <bean id="paginationInterceptor"
+	            class="com.baomidou.mybatisplus.plugins.PaginationInterceptor">
+	            <property name="dialectType" value="mysql" />
+	         </bean>
+	      </array>
+	    </property>
+	    <!-- MP 全局配置注入 -->
+   	    <property name="globalConfig" ref="globalConfig"/>
+	</bean>
+
+	<bean id="globalConfig" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+	   <property name="idType" value="0"/>
+	   <property name="dbType" value="mysql"/>
+	   <property name="dbColumnUnderline" value="true"/>
+	</bean>
+
+	<!-- 3. mybatis自动扫描加载Sql接口 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.yun.smart.mapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+
+	<!-- 4. 事务管理  -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<import resource="classpath:spring-dubbo.xml" />
+	<import resource="classpath:spring-redis.xml" />
+</beans>

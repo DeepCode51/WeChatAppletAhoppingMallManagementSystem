@@ -1,0 +1,62 @@
+﻿﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>图片列表</title>
+<!-- 引入js -->
+<script type="text/javascript" src="../../static/base/baselib.js"></script>
+</head>
+
+<body>
+<!-- 目录 -->
+<nav class="breadcrumb">
+	<i class="Hui-iconfont">&#xe67f;</i> 首页 
+	<span class="c-gray en">&gt;</span> 菜单目录 
+	<span class="c-gray en">&gt;</span> 图片 
+	<button class="btn btn-primary radius r" style="line-height:1.6em;margin-top:3px" onclick="removeIframe()" >关闭选项卡</button>
+</nav>
+
+<div class="page-container">
+	<form id="table_search_form">
+		<div class="text-r">
+			<!-- 查询条件 -->
+			<div class="check-box"><input type="checkbox" value="1" name="mainLogo" id="mainLogo"><label for="mainLogo">只看主图</label></div>
+			<input type="text" name="bizNo" placeholder="业务编号" style="width:150px" class="input-text radius">
+			<input type="text" name="fileName" placeholder="图片名称" style="width:150px" class="input-text radius">
+			<select class="input-text radius" name="bizType" style="width:150px"></select>
+			<!-- 固定按钮 -->
+			<a id="table_search" class="btn btn-success radius" title="查询"><i class="Hui-iconfont">&#xe665;</i> 查询</a>
+			<a class="btn btn-success radius" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+		</div>
+	</form>
+	
+	<!-- 操作按钮 -->
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a id="table_delete" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a> 
+		</span> 
+	</div>
+
+	<!-- 数据表格 -->
+	<div class="mt-20">
+		<div class="table-responsive">
+			<table class="table table-striped" id="table_list" style="word-break:break-all; word-wrap:break-all;">
+				<thead>
+					<tr>
+						<th data-field="check" data-checkbox = "true"></th>
+						<th data-field="bizNo" data-valign="middle">业务编号</th>
+						<th data-field="fileName" data-valign="middle">图片名称</th>
+						<th data-field="filePath" data-valign="middle" data-formatter="FileImage.imageFormatter">图片预览</th>
+						<th data-field="bizType" data-valign="middle" data-formatter="FileImage.bizTypeFormatter">业务分类</th>
+						<th data-field="mainLogo" data-valign="middle" data-formatter="FileImage.mainLogoFormatter">是否主图</th>
+						<th data-field="topShow" data-valign="middle" data-formatter="FileImage.topShowFormatter">是否展示图</th>
+						<th data-field="operate" data-width="10%" data-valign="middle" data-formatter="FileImage.operateFormatter"  data-events="FileImage.operateEvents">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="fileImage-list.js"></script>
+</body>
+</html>

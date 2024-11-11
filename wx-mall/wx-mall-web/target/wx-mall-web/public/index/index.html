@@ -1,0 +1,135 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>辰颐物语</title>
+<!-- 引入js -->
+<script type="text/javascript" src="../static/base/baselib.js"></script>
+</head>
+
+<body>
+<!-- 导航栏 -->
+<header class="navbar-wrapper">
+	<div class="navbar navbar-fixed-top">
+		<div class="container-fluid cl"> 
+			<!-- 主logo -->
+			<a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">辰颐物语</a> 
+			<a class="logo navbar-logo-m f-l mr-10 visible-xs" href="#">水果园</a> 
+			<span class="logo navbar-slogan f-l mr-10 hidden-xs">从枝头到舌尖的美味</span> 
+			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+			
+			<!-- 导航栏-菜单 -->
+			<nav class="nav navbar-nav">
+				<ul class="cl">
+					<li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
+						<ul class="dropDown-menu menu radius box-shadow">
+							<li><a href="javascript:;" onclick="CommUtils.cmOpenIframe('添加文章','../html/fileTips/fileTips-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
+							<li><a href="javascript:;" onclick="CommUtils.cmOpenIframe('添加用户','../html/userInfo/userInfo-add.html')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+			
+			<!-- 导航栏-登录信息 -->
+			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+				<script type="text/template7" id="template-header">
+				<ul class="cl">
+					<li>{{userInfo.userRole}}</li>
+					<li class="dropDown dropDown_hover">
+						<a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+						<ul class="dropDown-menu menu radius box-shadow">
+							<li><a href="#" id="myselfInfo">{{userInfo.userName}}</a></li>
+							<li><a href="#" id="changeRole">切换账户</a></li>
+							<li><a href="#" id="logOut">退出</a></li>
+						</ul>
+					</li>
+					<li id="Hui-msg"> 
+						<a data-href="../html/orderNotice/orderNotice-list.html" data-title="消息提醒" title="未读消息">
+							<span class="badge badge-danger">{{userInfo.userMsg}}</span>
+							<i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i>
+						</a> 
+					</li>
+					<li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
+						<ul class="dropDown-menu menu radius box-shadow">
+							<li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
+						</ul>
+					</li>
+				</ul>
+				</script>
+			</nav>
+		</div>
+	</div>
+</header>
+<!-- /导航栏 -->
+
+<!-- 菜单栏 -->
+<aside class="Hui-aside">
+	<div class="menu_dropdown bk_2" id="sys-menu">
+		<script type="text/template7" id="template-menus">
+		{{#each menus}}
+		{{#js_compare "this.childs.length == 0"}}
+		<dl>
+			<dt><i class="Hui-iconfont">{{icon}}</i> <a data-href="{{url}}" data-title="{{menuName}}" href="javascript:void(0)">{{menuName}}</a></dt>
+		</dl>
+		{{else}}
+		<dl>
+			<dt><i class="Hui-iconfont">{{icon}}</i> {{menuName}}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					{{#each this.childs}}
+					<li><a data-href="{{url}}" data-title="{{menuName}}" href="javascript:void(0)">{{menuName}}</a></li>
+					{{/each}}	
+				</ul>
+			</dd>
+		</dl>
+		{{/js_compare}}
+		{{/each}}
+		</script>
+	</div>
+</aside>
+<!-- /菜单栏 -->
+
+<!-- 首页固定显示 -->
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
+<section class="Hui-article-box">
+	<div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
+		<div class="Hui-tabNav-wp">
+			<ul id="min_title_list" class="acrossTab cl">
+				<li class="active">
+					<span title="welcome" data-href="../html/goodsInfo/goodsInfo-list.html">welcome</span>
+					<em></em>
+				</li>
+			</ul>
+		</div>
+		<div class="Hui-tabNav-more btn-group">
+			<a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;">
+				<i class="Hui-iconfont">&#xe6d4;</i>
+			</a>
+			<a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;">
+				<i class="Hui-iconfont">&#xe6d7;</i>
+			</a>
+		</div>
+	</div>
+	<div id="iframe_box" class="Hui-article">
+		<div class="show_iframe">
+			<div style="display:none" class="loading"></div>
+			<iframe scrolling="yes" frameborder="0" src="../html/goodsInfo/goodsInfo-list.html"></iframe>
+		</div>
+	</div>
+</section>
+<!-- /首页固定显示 -->
+
+<!-- 子菜单 -->
+<div class="contextMenu" id="Huiadminmenu">
+	<ul>
+		<li id="closethis">关闭当前 </li>
+		<li id="closeall">关闭全部 </li>
+	</ul>
+</div>
+
+<!--当前页面所需脚本-->
+<script type="text/javascript" src="../lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
+<script type="text/javascript" src="../lib/template7/template7.min.js"></script>
+<script type="text/javascript" src="index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.AccessLogMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	   id as id,
+  	   user_id as userId,
+  	   user_name as userName,
+  	   operate_type as operateType,
+  	   operate_name as operateName,
+  	   operate_method as operateMethod,
+  	   url as url,
+  	   req_param as reqParam,
+  	   res_result as resResult,
+  	   execute_time as executeTime,
+  	   ip as ip,
+  	   create_by as createBy,
+  	   create_time as createTime,
+  	   update_by as updateBy,
+  	   update_time as updateTime,
+  	   enable as enable,
+  	   remark as remark,
+  	</trim>
+  </sql>
+
+	<!-- 根据条件分页查询结果集 -->
+	<select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.AccessLogSearchParams">
+		select
+		<include refid="baseColumns" />
+		from wx_access_log
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>
+
+	<!-- 根据条件查询结果集 -->
+	<select id="searchList" resultType="com.yun.smart.model.AccessLog" parameterType="com.yun.smart.model.AccessLog">
+		select
+		<include refid="baseColumns" />
+		from wx_access_log
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>  
+	
+	<!-- 查询条件 -->
+	<sql id="whereClause">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND ${columnPrefix}id = #{id}
+			</if>
+			<if test="userId != null">
+				AND ${columnPrefix}user_id = #{userId}
+			</if>
+			<if test="userName != null">
+				AND ${columnPrefix}user_name = #{userName}
+			</if>
+			<if test="operateType != null">
+				AND ${columnPrefix}operate_type = #{operateType}
+			</if>
+			<if test="operateName != null">
+				AND ${columnPrefix}operate_name = #{operateName}
+			</if>
+			<if test="operateMethod != null">
+				AND ${columnPrefix}operate_method = #{operateMethod}
+			</if>
+			<if test="url != null">
+				AND ${columnPrefix}url = #{url}
+			</if>
+			<if test="reqParam != null">
+				AND ${columnPrefix}req_param = #{reqParam}
+			</if>
+			<if test="resResult != null">
+				AND ${columnPrefix}res_result = #{resResult}
+			</if>
+			<if test="executeTime != null">
+				AND ${columnPrefix}execute_time = #{executeTime}
+			</if>
+			<if test="ip != null">
+				AND ${columnPrefix}ip = #{ip}
+			</if>
+			<if test="createBy != null">
+				AND ${columnPrefix}create_by = #{createBy}
+			</if>
+			<if test="createTime != null">
+				AND ${columnPrefix}create_time = #{createTime}
+			</if>
+			<if test="updateBy != null">
+				AND ${columnPrefix}update_by = #{updateBy}
+			</if>
+			<if test="updateTime != null">
+				AND ${columnPrefix}update_time = #{updateTime}
+			</if>
+			<if test="enable != null">
+				AND ${columnPrefix}enable = #{enable}
+			</if>
+			<if test="remark != null">
+				AND ${columnPrefix}remark = #{remark}
+			</if>
+		</trim>
+	</sql>
+</mapper>

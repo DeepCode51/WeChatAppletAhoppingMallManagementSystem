@@ -1,0 +1,50 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>产品图片</title>
+<link href="../../../lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+<!-- 引入js -->
+<script type="text/javascript" src="../../../static/base/baselib.js"></script>
+</head>
+
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-goodsInfo-image">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">产品图片：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<ul class="travel-pic cl" id="goods-images"></ul>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">图片上传：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="uploader-list-container"> 
+					<div class="queueList">
+						<div id="dndArea" class="placeholder">
+							<div id="filePickerArea"></div>
+							<p>或将照片拖到这里，单次最多可选300张</p>
+						</div>
+					</div>
+					<div class="statusBar" style="display:none;">
+						<div class="progress"> <span class="text">0%</span> <span class="percentage"></span> </div>
+						<div class="info"></div>
+						<div class="btns">
+							<div id="filePicker"></div>
+							<div class="uploadBtn">开始上传</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</article>
+
+
+<!--当前页面所需脚本-->
+<script type="text/javascript" src="../../../lib/webuploader/0.1.5/webuploader.min.js"></script> 
+<script type="text/javascript" src="../../upload-image/webuploader-file.js"></script>
+<script type="text/javascript" src="goodsInfo-image.js"></script>
+</body>
+</html>

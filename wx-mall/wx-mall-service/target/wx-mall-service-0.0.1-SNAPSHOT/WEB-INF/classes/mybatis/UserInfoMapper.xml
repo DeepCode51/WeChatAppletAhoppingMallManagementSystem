@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.UserInfoMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	   id as id,
+  	   user_name as userName,
+  	   phone as phone,
+  	   passwd as passwd,
+  	   wx_account as wxAccount,
+  	   wx_openid as wxOpenid,
+  	   user_type as userType,
+  	   create_by as createBy,
+  	   create_time as createTime,
+  	   update_by as updateBy,
+  	   update_time as updateTime,
+  	   enable as enable,
+  	   remark as remark,
+  	</trim>
+  </sql>
+
+	<!-- 根据条件分页查询结果集 -->
+	<select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.UserInfoSearchParams">
+		select
+		   id as id,
+	  	   user_name as userName,
+	  	   phone as phone,
+	  	   wx_account as wxAccount,
+	  	   wx_openid as wxOpenid,
+	  	   user_type as userType
+		from wx_user_info
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="enable != null">
+				AND enable = #{enable}
+			</if>
+			<if test="userName != null and userName != ''">
+				AND user_name LIKE CONCAT('%', #{userName},'%')
+			</if>
+			<if test="wxAccount != null and wxAccount != ''">
+				AND wx_account LIKE CONCAT('%', #{wxAccount},'%')
+			</if>
+			<if test="userType != null and userType != ''">
+				AND user_type = #{userType}
+			</if>
+		</trim>
+	</select>
+
+	<!-- 根据条件查询结果集 -->
+	<select id="searchList" resultType="com.yun.smart.model.UserInfo" parameterType="com.yun.smart.model.UserInfo">
+		select
+		<include refid="baseColumns" />
+		from wx_user_info
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>  
+	
+	<!-- 查询条件 -->
+	<sql id="whereClause">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND ${columnPrefix}id = #{id}
+			</if>
+			<if test="userName != null">
+				AND ${columnPrefix}user_name = #{userName}
+			</if>
+			<if test="phone != null">
+				AND ${columnPrefix}phone = #{phone}
+			</if>
+			<if test="passwd != null">
+				AND ${columnPrefix}passwd = #{passwd}
+			</if>
+			<if test="wxAccount != null">
+				AND ${columnPrefix}wx_account = #{wxAccount}
+			</if>
+			<if test="wxOpenid != null">
+				AND ${columnPrefix}wx_openid = #{wxOpenid}
+			</if>
+			<if test="userType != null">
+				AND ${columnPrefix}user_type = #{userType}
+			</if>
+			<if test="createBy != null">
+				AND ${columnPrefix}create_by = #{createBy}
+			</if>
+			<if test="createTime != null">
+				AND ${columnPrefix}create_time = #{createTime}
+			</if>
+			<if test="updateBy != null">
+				AND ${columnPrefix}update_by = #{updateBy}
+			</if>
+			<if test="updateTime != null">
+				AND ${columnPrefix}update_time = #{updateTime}
+			</if>
+			<if test="enable != null">
+				AND ${columnPrefix}enable = #{enable}
+			</if>
+			<if test="remark != null">
+				AND ${columnPrefix}remark = #{remark}
+			</if>
+		</trim>
+	</sql>
+</mapper>

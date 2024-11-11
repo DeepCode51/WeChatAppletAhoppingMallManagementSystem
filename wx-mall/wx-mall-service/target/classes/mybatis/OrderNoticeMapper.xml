@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.OrderNoticeMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	  id as id,
+  	  title as title,
+  	  order_no as orderNo,
+  	  content as content,
+  	  notice_type as noticeType,
+  	  notice_status as noticeStatus,
+  	  create_by as createBy,
+  	  create_time as createTime,
+  	  update_by as updateBy,
+  	  update_time as updateTime,
+  	  enable as enable,
+  	  remark as remark,
+  	</trim>
+  </sql>
+
+  <!-- 根据条件分页查询结果集 -->
+  <select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.OrderNoticeSearchParams">
+	select
+	  <include refid="baseColumns" />
+	from wx_order_notice
+	<trim prefix="WHERE" prefixOverrides="AND">
+		<if test="enable != null">
+		  and enable = #{enable}
+		</if>
+		<if test="orderNo != null and orderNo != ''">
+		  and order_no = #{orderNo}
+		</if>
+		<if test="noticeType != null and noticeType != ''">
+		  and notice_type = #{noticeType}
+		</if>
+		<if test="noticeStatus != null and noticeStatus != ''">
+		  and notice_status = #{noticeStatus}
+		</if>
+	</trim>
+  </select>
+
+  <!-- 根据条件查询结果集 -->
+  <select id="searchList" resultType="com.yun.smart.model.OrderNotice" parameterType="com.yun.smart.model.OrderNotice">
+	select
+	  <include refid="baseColumns" />
+	from wx_order_notice
+	<include refid="whereClause">
+      <property name="columnPrefix" value=""/>
+    </include>
+  </select>  
+	
+<!-- 查询条件 -->
+  <sql id="whereClause">
+	<trim prefix="WHERE" prefixOverrides="AND">
+	<if test="id != null">
+	  and ${columnPrefix}id = #{id}
+	</if>
+	<if test="title != null and title != ''">
+	  and ${columnPrefix}title = #{title}
+	</if>
+	<if test="orderNo != null and orderNo != ''">
+	  and ${columnPrefix}order_no = #{orderNo}
+	</if>
+	<if test="content != null and content != ''">
+	  and ${columnPrefix}content = #{content}
+	</if>
+	<if test="noticeType != null and noticeType != ''">
+	  and ${columnPrefix}notice_type = #{noticeType}
+	</if>
+	<if test="noticeStatus != null and noticeStatus != ''">
+	  and ${columnPrefix}notice_status = #{noticeStatus}
+	</if>
+	<if test="createBy != null">
+	  and ${columnPrefix}create_by = #{createBy}
+	</if>
+	<if test="createTime != null">
+	  and ${columnPrefix}create_time = #{createTime}
+	</if>
+	<if test="updateBy != null">
+	  and ${columnPrefix}update_by = #{updateBy}
+	</if>
+	<if test="updateTime != null">
+	  and ${columnPrefix}update_time = #{updateTime}
+	</if>
+	<if test="enable != null">
+	  and ${columnPrefix}enable = #{enable}
+	</if>
+	<if test="remark != null and remark != ''">
+	  and ${columnPrefix}remark = #{remark}
+	</if>
+	</trim>
+  </sql>
+  
+</mapper>

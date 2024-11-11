@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>编辑字典</title>
+<!-- 引入js -->
+<script type="text/javascript" src="../../../static/base/baselib.js"></script>
+</head>
+
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-dicInfo-edit">
+		<input type="hidden" name="id" />
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">字典组：</label>
+			<div class="formControls col-xs-8 col-sm-3">
+				<select class="input-text radius" id="parentId" name="parentId"></select>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>标识：</label>
+			<div class="formControls col-xs-8 col-sm-3">
+				<input type="text" class="input-text radius" id="dicName" name="dicName" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>字典词：</label>
+			<div class="formControls col-xs-8 col-sm-3">
+				<input type="text" class="input-text radius" id="dicText" name="dicText" required="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>字典值：</label>
+			<div class="formControls col-xs-8 col-sm-3">
+				<input type="text" class="input-text radius" id="dicValue" name="dicValue" required="true">
+			</div>
+		</div>
+        <!-- 操作按钮 -->
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button onClick="CommUtils.cmCloseIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+
+<!--当前页面所需脚本-->
+<script type="text/javascript" src="dicInfo-edit.js"></script>
+</body>
+</html>

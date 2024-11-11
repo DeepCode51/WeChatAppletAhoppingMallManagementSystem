@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.FileTipsMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	   id as id,
+  	   title as title,
+  	   content as content,
+  	   biz_type as bizType,
+  	   create_by as createBy,
+  	   create_time as createTime,
+  	   update_by as updateBy,
+  	   update_time as updateTime,
+  	   enable as enable,
+  	   remark as remark,
+  	</trim>
+  </sql>
+
+	<!-- 根据条件分页查询结果集 -->
+	<select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.FileTipsSearchParams">
+		select
+		<include refid="baseColumns" />
+		from wx_file_tips
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>
+
+	<!-- 根据条件查询结果集 -->
+	<select id="searchList" resultType="com.yun.smart.model.FileTips" parameterType="com.yun.smart.model.FileTips">
+		select
+		<include refid="baseColumns" />
+		from wx_file_tips
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>  
+	
+	<!-- 查询条件 -->
+	<sql id="whereClause">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND ${columnPrefix}id = #{id}
+			</if>
+			<if test="title != null">
+				AND ${columnPrefix}title = #{title}
+			</if>
+			<if test="content != null">
+				AND ${columnPrefix}content = #{content}
+			</if>
+			<if test="bizType != null">
+				AND ${columnPrefix}biz_type = #{bizType}
+			</if>
+			<if test="createBy != null">
+				AND ${columnPrefix}create_by = #{createBy}
+			</if>
+			<if test="createTime != null">
+				AND ${columnPrefix}create_time = #{createTime}
+			</if>
+			<if test="updateBy != null">
+				AND ${columnPrefix}update_by = #{updateBy}
+			</if>
+			<if test="updateTime != null">
+				AND ${columnPrefix}update_time = #{updateTime}
+			</if>
+			<if test="enable != null">
+				AND ${columnPrefix}enable = #{enable}
+			</if>
+			<if test="remark != null">
+				AND ${columnPrefix}remark = #{remark}
+			</if>
+		</trim>
+	</sql>
+</mapper>

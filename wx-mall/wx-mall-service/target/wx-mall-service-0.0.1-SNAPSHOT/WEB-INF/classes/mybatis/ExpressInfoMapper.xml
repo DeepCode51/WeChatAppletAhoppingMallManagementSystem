@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.ExpressInfoMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	  id as id,
+  	  order_no as orderNo,
+  	  express_name as expressName,
+  	  express_code as expressCode,
+  	  express_no as expressNo,
+  	  create_by as createBy,
+  	  create_time as createTime,
+  	  update_by as updateBy,
+  	  update_time as updateTime,
+  	  enable as enable,
+  	  remark as remark,
+  	</trim>
+  </sql>
+
+  <!-- 根据条件分页查询结果集 -->
+  <select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.ExpressInfoSearchParams">
+	select
+	  <include refid="baseColumns" />
+	from wx_express_info
+	<include refid="whereClause">
+      <property name="columnPrefix" value=""/>
+    </include>
+  </select>
+
+  <!-- 根据条件查询结果集 -->
+  <select id="searchList" resultType="com.yun.smart.model.ExpressInfo" parameterType="com.yun.smart.model.ExpressInfo">
+	select
+	  <include refid="baseColumns" />
+	from wx_express_info
+	<include refid="whereClause">
+      <property name="columnPrefix" value=""/>
+    </include>
+  </select>  
+	
+<!-- 查询条件 -->
+  <sql id="whereClause">
+	<trim prefix="WHERE" prefixOverrides="AND">
+	<if test="id != null">
+	  and ${columnPrefix}id = #{id}
+	</if>
+	<if test="orderNo != null and orderNo != ''">
+	  and ${columnPrefix}order_no = #{orderNo}
+	</if>
+	<if test="expressName != null and expressName != ''">
+	  and ${columnPrefix}express_name = #{expressName}
+	</if>
+	<if test="expressCode != null and expressCode != ''">
+	  and ${columnPrefix}express_code = #{expressCode}
+	</if>
+	<if test="expressNo != null and expressNo != ''">
+	  and ${columnPrefix}express_no = #{expressNo}
+	</if>
+	<if test="createBy != null">
+	  and ${columnPrefix}create_by = #{createBy}
+	</if>
+	<if test="createTime != null">
+	  and ${columnPrefix}create_time = #{createTime}
+	</if>
+	<if test="updateBy != null">
+	  and ${columnPrefix}update_by = #{updateBy}
+	</if>
+	<if test="updateTime != null">
+	  and ${columnPrefix}update_time = #{updateTime}
+	</if>
+	<if test="enable != null">
+	  and ${columnPrefix}enable = #{enable}
+	</if>
+	<if test="remark != null and remark != ''">
+	  and ${columnPrefix}remark = #{remark}
+	</if>
+	</trim>
+  </sql>
+  
+</mapper>

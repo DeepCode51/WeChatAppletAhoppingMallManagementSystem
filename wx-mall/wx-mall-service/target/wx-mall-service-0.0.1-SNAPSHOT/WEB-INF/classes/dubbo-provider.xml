@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:service interface="com.yun.smart.service.AuthService" ref="authService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.AccessLogService" ref="accessLogService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.AddressListService" ref="addressListService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.FileImageService" ref="fileImageService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.FileTipsService" ref="fileTipsService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.GoodsInfoService" ref="goodsInfoService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.OrderCommentService" ref="orderCommentService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.OrderInfoService" ref="orderInfoService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.OrderNoticeService" ref="orderNoticeService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.UserInfoService" ref="userInfoService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.DicInfoService" ref="dicInfoService" ></dubbo:service>
+	<dubbo:service interface="com.yun.smart.service.ExpressInfoService" ref="expressInfoService" ></dubbo:service>
+</beans>

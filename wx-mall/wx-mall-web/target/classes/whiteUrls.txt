@@ -1,0 +1,2 @@
+/smart/auth/pc/v1/login
+/smart/auth/app/v1/login

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<!-- blockWhenExhausted: 从Pool中获取Jedis对象，Pool资源耗尽后阻塞maxWaitMillis参数指定时间 -->
+	<!-- maxWaitMillis: 从Pool中获取Jedis对象超时时间 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
+	      p:minIdle="2"
+	      p:maxIdle="5"
+	      p:maxTotal="8"
+	      p:maxWaitMillis="2000"
+	      p:testOnBorrow="false"
+	      p:testOnReturn="false"
+	      p:testWhileIdle="true"
+	      p:blockWhenExhausted="true" />
+
+	<!-- Redis连接 -->
+	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+	    <property name="usePool" value="true" />
+	    <property name="hostName" value="127.0.0.1" />
+	    <property name="port" value="6379" />
+	    <property name="password" value="" />
+	    <property name="timeout" value="6000" />
+		<constructor-arg name="poolConfig" ref="jedisPoolConfig" />
+	</bean>
+</beans>

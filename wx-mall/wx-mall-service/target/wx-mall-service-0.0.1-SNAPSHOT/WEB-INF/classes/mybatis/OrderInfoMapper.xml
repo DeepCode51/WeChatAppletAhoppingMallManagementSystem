@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.OrderInfoMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	  id as id,
+  	  order_no as orderNo,
+  	  user_id as userId,
+  	  goods_no as goodsNo,
+  	  total_price as totalPrice,
+  	  goods_num as goodsNum,
+  	  addr_id as addrId,
+  	  order_status as orderStatus,
+  	  create_by as createBy,
+  	  create_time as createTime,
+  	  update_by as updateBy,
+  	  update_time as updateTime,
+  	  enable as enable,
+  	  remark as remark,
+  	</trim>
+  </sql>
+
+	<!-- 根据条件分页查询结果集 -->
+	<select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.OrderInfoSearchParams">
+		select
+		   a.id as id,
+		   a.order_no as orderNo,
+	  	   b.id as userId,
+	  	   c.goods_no as goodsNo,
+	  	   d.id as addrId,
+	  	   a.goods_num as goodsNum,
+	  	   a.total_price as totalPrice,
+	  	   a.order_status as orderStatus,
+	  	   a.create_time as createTime,
+	  	   a.remark as remark,
+	  	   b.user_name as userName,
+	  	   b.phone as phone,
+	  	   c.name as goodsName,
+	  	   c.sell_price as sellPrice,
+	  	   d.link_man as linkMan,
+	  	   d.link_phone as linkPhone,
+	  	   d.link_addr as linkAddr,
+	  	   e.file_path as filePath
+		from 
+			wx_order_info a 
+		left join 
+			wx_user_info b 
+		on 
+			a.user_id = b.id
+		left join
+			wx_goods_info c
+		on
+			a.goods_no = c.goods_no
+		left join
+			wx_address_list d
+		on
+			a.addr_id = d.id 
+		left join
+			wx_file_image e
+		on
+			(c.goods_no = e.biz_no and e.enable = 1 and e.main_logo = 1)
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="enable != null">
+				AND a.enable = #{enable}
+			</if>
+			<if test="userId != null">
+				AND a.user_id = #{userId}
+			</if>
+			<if test="orderNo != null and orderNo !=''">
+				AND a.order_no = #{orderNo}
+			</if>
+			<if test="orderStatus != null and orderStatus !=''">
+				AND a.order_status = #{orderStatus}
+			</if>
+			<if test="minCreateTime !=null">
+				AND a.create_time <![CDATA[>=]]> #{minCreateTime}
+			</if>
+			<if test="maxCreateTime !=null">
+				AND a.create_time <![CDATA[<=]]> #{maxCreateTime}
+			</if>
+			<if test="userName != null and userName !=''">
+				AND b.user_name LIKE CONCAT('%', #{userName},'%')
+			</if>
+			<if test="goodsName != null and goodsName !=''">
+				AND c.name LIKE CONCAT('%', #{goodsName},'%')
+			</if>
+			<if test="linkMan != null and linkMan !=''">
+				AND d.link_man LIKE CONCAT('%', #{linkMan},'%')
+			</if>
+			<if test="orderNos != null">
+				AND a.order_no in 
+				<foreach collection="orderNos" index="index" item="orderNo" open="(" separator="," close=")">
+					#{orderNo}
+				</foreach>
+			</if>
+		</trim>
+	</select>
+
+	<!-- 查询订单明细 -->
+	<select id="searchInfo" resultType="java.util.Map" parameterType="com.yun.smart.model.OrderInfo">
+		select
+		   a.id as id,
+	  	   a.order_no as orderNo,
+	  	   b.id as userId,
+	  	   c.goods_no as goodsNo,
+	  	   d.id as addrId,
+	  	   a.goods_num as goodsNum,
+	  	   a.total_price as totalPrice,
+	  	   a.order_status as orderStatus,
+	  	   a.create_time as createTime,
+	  	   a.remark as remark,
+	  	   b.user_name as userName,
+	  	   b.phone as phone,
+	  	   c.name as goodsName,
+	  	   c.sell_price as sellPrice,
+	  	   d.link_man as linkMan,
+	  	   d.link_phone as linkPhone,
+	  	   d.link_addr as linkAddr,
+	  	   e.file_path as filePath
+		from 
+			wx_order_info a 
+		left join 
+			wx_user_info b 
+		on 
+			a.user_id = b.id
+		left join
+			wx_goods_info c
+		on
+			a.goods_no = c.goods_no
+		left join
+			wx_address_list d
+		on
+			a.addr_id = d.id 
+		left join
+			wx_file_image e
+		on
+			(c.goods_no = e.biz_no and e.enable = 1 and e.main_logo = 1)
+		where
+			a.enable = 1
+		and
+			a.order_no = #{orderNo}
+	</select>  
+	
+	<select id="searchTotal" resultType="java.util.Map" parameterType="com.yun.smart.param.OrderInfoSearchParams">
+		select 
+			order_status as orderStatus, 
+			count(1) as total 
+		from 
+			wx_order_info 
+		where 
+			enable = #{enable} 
+		and 
+			user_id = #{userId} 
+		group by orderStatus
+	</select>
+
+	<!-- 根据条件查询结果集 -->
+	<select id="searchList" resultType="com.yun.smart.model.OrderInfo" parameterType="com.yun.smart.model.OrderInfo">
+		select
+		<include refid="baseColumns" />
+		from wx_order_info
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>  
+	
+	<!-- 查询条件 -->
+	<sql id="whereClause">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND ${columnPrefix}id = #{id}
+			</if>
+			<if test="orderNo != null and orderNo != ''">
+			    AND ${columnPrefix}order_no = #{orderNo}
+			</if>
+			<if test="userId != null">
+				AND ${columnPrefix}user_id = #{userId}
+			</if>
+			<if test="goodsNo != null and goodsNo != ''">
+				AND ${columnPrefix}goods_no = #{goodsNo}
+			</if>
+			<if test="totalPrice != null">
+				AND ${columnPrefix}total_price = #{totalPrice}
+			</if>
+			<if test="goodsNum != null">
+				AND ${columnPrefix}goods_num = #{goodsNum}
+			</if>
+			<if test="addrId != null">
+				AND ${columnPrefix}addr_id = #{addrId}
+			</if>
+			<if test="orderStatus != null">
+				AND ${columnPrefix}order_status = #{orderStatus}
+			</if>
+			<if test="createBy != null">
+				AND ${columnPrefix}create_by = #{createBy}
+			</if>
+			<if test="createTime != null">
+				AND ${columnPrefix}create_time = #{createTime}
+			</if>
+			<if test="updateBy != null">
+				AND ${columnPrefix}update_by = #{updateBy}
+			</if>
+			<if test="updateTime != null">
+				AND ${columnPrefix}update_time = #{updateTime}
+			</if>
+			<if test="enable != null">
+				AND ${columnPrefix}enable = #{enable}
+			</if>
+			<if test="remark != null">
+				AND ${columnPrefix}remark = #{remark}
+			</if>
+		</trim>
+	</sql>
+</mapper>

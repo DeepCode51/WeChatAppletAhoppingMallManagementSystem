@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.smart.mapper.FileImageMapper" >
+  
+  <sql id="baseColumns" >
+  	<trim suffixOverrides=",">
+  	   id as id,
+  	   file_name as fileName,
+  	   file_path as filePath,
+  	   biz_type as bizType,
+  	   biz_no as bizNo,
+  	   main_logo as mainLogo,
+  	   top_show as topShow,
+  	   create_by as createBy,
+  	   create_time as createTime,
+  	   update_by as updateBy,
+  	   update_time as updateTime,
+  	   enable as enable,
+  	   remark as remark,
+  	</trim>
+  </sql>
+
+	<!-- 根据条件分页查询结果集 -->
+	<select id="searchPage" resultType="java.util.Map" parameterType="com.yun.smart.param.FileImageSearchParams">
+		select
+		<include refid="baseColumns" />
+		from wx_file_image
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="enable != null">
+				AND enable = #{enable}
+			</if>
+			<if test="fileName != null and fileName != ''">
+				AND file_name LIKE CONCAT('%', #{fileName},'%')
+			</if>
+			<if test="bizNo != null and bizNo != ''">
+				AND biz_no = #{bizNo}
+			</if>
+			<if test="bizType != null and bizType != ''">
+				AND biz_type = #{bizType}
+			</if>
+			<if test="mainLogo != null">
+				AND main_logo = #{mainLogo}
+			</if>
+			<if test="topShow != null">
+				AND top_show = #{topShow}
+			</if>
+		</trim>
+	</select>
+
+	<!-- 根据条件查询结果集 -->
+	<select id="searchList" resultType="com.yun.smart.model.FileImage" parameterType="com.yun.smart.model.FileImage">
+		select
+		<include refid="baseColumns" />
+		from wx_file_image
+		<include refid="whereClause">
+            <property name="columnPrefix" value=""/>
+        </include>
+	</select>  
+	
+	<!-- 查询条件 -->
+	<sql id="whereClause">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND ${columnPrefix}id = #{id}
+			</if>
+			<if test="fileName != null">
+				AND ${columnPrefix}file_name = #{fileName}
+			</if>
+			<if test="filePath != null">
+				AND ${columnPrefix}file_path = #{filePath}
+			</if>
+			<if test="bizType != null">
+				AND ${columnPrefix}biz_type = #{bizType}
+			</if>
+			<if test="bizNo != null">
+				AND ${columnPrefix}biz_no = #{bizNo}
+			</if>
+			<if test="mainLogo != null">
+				AND ${columnPrefix}main_logo = #{mainLogo}
+			</if>
+			<if test="topShow != null">
+			  and ${columnPrefix}top_show = #{topShow}
+			</if>
+			<if test="createBy != null">
+				AND ${columnPrefix}create_by = #{createBy}
+			</if>
+			<if test="createTime != null">
+				AND ${columnPrefix}create_time = #{createTime}
+			</if>
+			<if test="updateBy != null">
+				AND ${columnPrefix}update_by = #{updateBy}
+			</if>
+			<if test="updateTime != null">
+				AND ${columnPrefix}update_time = #{updateTime}
+			</if>
+			<if test="enable != null">
+				AND ${columnPrefix}enable = #{enable}
+			</if>
+			<if test="remark != null">
+				AND ${columnPrefix}remark = #{remark}
+			</if>
+		</trim>
+	</sql>
+</mapper>
